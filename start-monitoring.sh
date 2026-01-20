@@ -26,8 +26,8 @@ GRAF_PROVISIONING_HOST_PATH="$PWD/grafana/provisioning"
 GRAF_PROVISIONING_CONT_PATH="/etc/grafana/provisioning"
 
 # App URL (PROMIJENI AKO TREBA)
-# APP_URL="${APP_URL:-http://parking-app:5000}"
-APP_URL="${APP_URL:-http://host.docker.internal:5000}"
+APP_URL="${APP_URL:-http://parking-app:5000}"
+# APP_URL="${APP_URL:-http://host.docker.internal:5000}"
 METRICS_PORT="${METRICS_PORT:-9090}"
 SCRAPE_INTERVAL="${SCRAPE_INTERVAL:-15}"
 
@@ -79,7 +79,7 @@ docker run -d \
   -e "METRICS_PORT=$METRICS_PORT" \
   -e "SCRAPE_INTERVAL=$SCRAPE_INTERVAL" \
   "$EXPORTER_IMAGE" >/dev/null
-  
+
 # ======= PROMETHEUS =======
 say "Starting Prometheus: $PROM_CONTAINER"
 rm_container_if_exists "$PROM_CONTAINER"
