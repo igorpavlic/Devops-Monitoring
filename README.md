@@ -72,8 +72,8 @@ project/
 ### Korak 1: Pokreni aplikaciju PRVO
 
 ```bash
-cd app
-docker-compose up -d --build
+# Kreira network
+docker network create parking-network 
 ```
 
 Ovo kreira `parking-network` network.
@@ -91,24 +91,6 @@ Monitoring se spaja na postojeći `parking-network`.
 
 App mora biti pokrenut prije monitoringa jer on kreira network.
 
----
-
-## 🔄 Neovisno upravljanje
-
-```bash
-# Samo app restart
-cd app && docker-compose restart
-
-# Samo monitoring restart  
-cd monitoring && docker-compose restart
-
-# Ugasi monitoring, app radi dalje
-cd monitoring && docker-compose down
-
-# Ugasi sve
-cd app && docker-compose down
-cd monitoring && docker-compose down
-```
 
 ---
 
@@ -135,41 +117,3 @@ cd monitoring && docker-compose down
 | `parking_spots_occupied` | Zauzeta mjesta |
 | `parking_spots_free` | Slobodna mjesta |
 | `parking_occupancy_ratio` | Zauzetost (0-1) |
-
----
-
-## 🔧 Troubleshooting
-
-### Network ne postoji?
-```bash
-# Provjeri da je app pokrenut
-docker network ls | grep parking
-
-# Ako ne postoji, pokreni app prvi
-cd app && docker-compose up -d
-```
-
-### Metrics exporter ne vidi app?
-```bash
-# Provjeri povezanost
-docker exec metrics-exporter ping parking-app
-```
-
-### Provjera logova
-```bash
-# App logs
-cd app && docker-compose logs -f
-
-# Monitoring logs
-cd monitoring && docker-compose logs -f
-```
-
----
-
-## 🎯 Prednosti zasebnih stackova
-
-✅ **Nezavisni deploy** - Update monitoring bez restarta app-a  
-✅ **Izolirani problemi** - Monitoring crash ne utječe na app  
-✅ **Fleksibilno skaliranje** - Različiti resursi za svaki stack  
-✅ **Čist code** - app.py ostaje nepromijenjen  
-✅ **Production-ready** - Ovako se radi u produkciji
