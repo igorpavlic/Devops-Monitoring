@@ -50,6 +50,12 @@ Obavezno najprije pokrenuti App.
 cd ../monitoring
 ./start-monitoring.sh
 ```
+
+### Korak 3: Otvaranje tunela sa lokalnog računala
+
+```bash
+ssh -N -L 5000:localhost:5000 -L 9090:localhost:9090 -L 9091:localhost:9091 -L 3000:localhost:3000 USERNAME@FIPU-SERVER -p 2127
+```
 ---
 
 ## 🌐 Pristup servisima
