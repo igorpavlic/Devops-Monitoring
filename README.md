@@ -72,16 +72,3 @@ ssh -N -L 5000:localhost:5000 -L 9090:localhost:9090 -L 9091:localhost:9091 -L 3
 | Grafana | http://localhost:3000 | monitoring |
 
 **Grafana login:** admin / admin123
-
----
-
-## 📊 Metrike
-
-| Metrika | Opis |
-|---------|------|
-| `parking_app_up` | Aplikacija dostupna (1/0) |
-| `parking_app_response_time_seconds` | Response time histogram |
-| `parking_app_health_checks_total` | Health check counter |
-| `parking_spots_occupied` | Zauzeta mjesta |
-| `parking_spots_free` | Slobodna mjesta |
-| `parking_occupancy_ratio` | Zauzetost (0-1) |
