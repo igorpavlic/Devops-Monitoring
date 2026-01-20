@@ -61,38 +61,42 @@ def check_health():
 
 def parse_parking_stats(html_content):
     """
-    Extract parking statistics from the index page.
-    This is a simple parser - adjust based on your actual HTML structure.
+    Parse parking statistics from the table:
+    columns: ID | Etaza | Sekcija | Je Okupirano (True/False)
     """
     try:
-        # Simple parsing - looks for patterns in the HTML
-        # Adjust these based on your actual index.html template
         import re
-        
-        # Example: looking for "Zauzeto: X" and "Slobodno: Y" patterns
-        occupied_match = re.search(r'occupied[_\-]?count["\s:>]+(\d+)', html_content, re.IGNORECASE)
-        free_match = re.search(r'(not[_\-]?occupied|free)[_\-]?count["\s:>]+(\d+)', html_content, re.IGNORECASE)
-        
-        # Alternative: count based on common patterns
-        occupied = html_content.lower().count('zauzeto') or 0
-        
-        if occupied_match:
-            occ = int(occupied_match.group(1))
-            parking_spots_occupied.set(occ)
-            
-        if free_match:
-            free = int(free_match.group(2) if free_match.lastindex >= 2 else free_match.group(1))
-            parking_spots_free.set(free)
-            
-        # If we have both, calculate total and ratio
-        if occupied_match and free_match:
-            total = occ + free
-            parking_spots_total.set(total)
-            if total > 0:
-                parking_occupancy_ratio.set(occ / total)
-                
+
+        # Match table rows and extract the last <td> value (True/False)
+        # Example row:
+        # <tr> ... <td>False</td> </tr>
+        values = re.findall(
+            r"<tr>\s*(?:<td>.*?</td>\s*){3}<td>\s*(True|False)\s*</td>\s*</tr>",
+            html_content,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+
+        if not values:
+            # fallback: count occurrences of <td>True</td> / <td>False</td>
+            true_count = len(re.findall(r"<td>\s*True\s*</td>", html_content, flags=re.IGNORECASE))
+            false_count = len(re.findall(r"<td>\s*False\s*</td>", html_content, flags=re.IGNORECASE))
+        else:
+            true_count = sum(1 for v in values if v.lower() == "true")
+            false_count = sum(1 for v in values if v.lower() == "false")
+
+        occupied = true_count
+        free = false_count
+        total = occupied + free
+
+        parking_spots_occupied.set(occupied)
+        parking_spots_free.set(free)
+        parking_spots_total.set(total)
+        if total > 0:
+            parking_occupancy_ratio.set(occupied / total)
+
     except Exception as e:
         print(f"Could not parse parking stats: {e}")
+
 
 
 def metrics_collector():
