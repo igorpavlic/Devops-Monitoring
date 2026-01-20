@@ -38,35 +38,6 @@ Monitoring stack koji je **potpuno odvojen** od aplikacije. Dva nezavisna docker
 
 ---
 
-## 📁 Struktura direktorija
-
-```
-project/
-├── app/                          # APP STACK
-│   ├── docker-compose.yml        # ← Pokreće SAMO app
-│   ├── Dockerfile
-│   ├── app.py                    # NEPROMIJENJEN!
-│   ├── requirements.txt
-│   ├── gunicorn_conf.py
-│   └── templates/
-│
-└── monitoring/                   # MONITORING STACK
-    ├── docker-compose.yml        # ← Pokreće SAMO monitoring
-    ├── Dockerfile.metrics
-    ├── metrics_exporter.py
-    ├── prometheus/
-    │   └── prometheus.yml
-    └── grafana/
-        └── provisioning/
-            ├── datasources/
-            │   └── datasource.yml
-            └── dashboards/
-                ├── dashboard.yml
-                └── parking-dashboard.json
-```
-
----
-
 ## 🚀 Pokretanje
 
 ### Korak 1: Pokreni aplikaciju PRVO

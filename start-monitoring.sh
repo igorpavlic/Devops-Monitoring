@@ -62,6 +62,7 @@ ensure_dir "$GRAF_PROVISIONING_HOST_PATH"
 # ======= NETWORK =======
 say "Ensuring network: $NETWORK"
 docker network inspect "$NETWORK" >/dev/null 2>&1 || docker network create "$NETWORK" >/dev/null
+docker network connect parking-network parking-app 2>/dev/null || true
 
 # ======= EXPORTER =======
 say "Building exporter image: $EXPORTER_IMAGE"
