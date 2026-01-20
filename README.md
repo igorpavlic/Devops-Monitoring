@@ -44,10 +44,14 @@ Monitoring stack koji je **potpuno odvojen** od aplikacije. Dva nezavisna docker
 
 Obavezno najprije pokrenuti App.
 
-### Korak 2: Pokreni monitoring
+### Korak 2: Git clone i pokretanje monitoringa
 
 ```bash
-cd ../monitoring
+git clone https://github.com/igorpavlic/Devops-Monitoring
+
+cd Devops-Monitoring
+
+chmod +x start-monitoring.sh
 ./start-monitoring.sh
 ```
 
