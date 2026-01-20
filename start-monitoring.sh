@@ -95,6 +95,7 @@ docker run -d \
 # ======= GRAFANA =======
 say "Starting Grafana: $GRAF_CONTAINER"
 rm_container_if_exists "$GRAF_CONTAINER"
+docker volume create grafana-data >/dev/null 2>&1 || true
 docker run -d \
   --name "$GRAF_CONTAINER" \
   --network "$NETWORK" \
@@ -102,6 +103,7 @@ docker run -d \
   -p "$GRAF_PORT_HOST:$GRAF_PORT_CONT" \
   -e "GF_SECURITY_ADMIN_USER=$GRAF_ADMIN_USER" \
   -e "GF_SECURITY_ADMIN_PASSWORD=$GRAF_ADMIN_PASS" \
+  -v grafana-data:/var/lib/grafana \
   -v "$GRAF_PROVISIONING_HOST_PATH:$GRAF_PROVISIONING_CONT_PATH:ro" \
   "$GRAF_IMAGE" >/dev/null
 
