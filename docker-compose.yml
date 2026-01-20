@@ -1,0 +1,70 @@
+version: '3.8'
+
+# ============================================
+# MONITORING STACK - Standalone
+# Spaja se na existing parking-app network
+# ============================================
+
+services:
+  # Metrics Exporter - monitors app externally
+  metrics-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.metrics
+    container_name: metrics-exporter
+    environment:
+      - APP_URL=http://parking-app:5000
+      - METRICS_PORT=9090
+      - SCRAPE_INTERVAL=15
+    ports:
+      - "9090:9090"
+    networks:
+      - parking-network
+    restart: unless-stopped
+
+  # Prometheus - metrics storage & querying
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    networks:
+      - parking-network
+    restart: unless-stopped
+
+  # Grafana - visualization & dashboards
+  grafana:
+    image: grafana/grafana:10.1.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - parking-network
+    restart: unless-stopped
+
+# Spaja se na EXTERNAL network koji kreira app
+networks:
+  parking-network:
+    external: true
+    name: parking-network
+
+volumes:
+  prometheus-data:
+  grafana-data:

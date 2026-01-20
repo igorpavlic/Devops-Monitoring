@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files: []
+
+scrape_configs:
+  # Scrape the metrics exporter (sidecar)
+  - job_name: 'parking-app-metrics'
+    static_configs:
+      - targets: ['metrics-exporter:9090']
+    metrics_path: /metrics
+    
+  # Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9091']
