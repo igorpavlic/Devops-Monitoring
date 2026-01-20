@@ -71,27 +71,14 @@ project/
 
 ### Korak 1: Pokreni aplikaciju PRVO
 
-```bash
-# Kreira network
-docker network create parking-network 
-```
-
-Ovo kreira `parking-network` network.
+Obavezno najprije pokrenuti App.
 
 ### Korak 2: Pokreni monitoring
 
 ```bash
 cd ../monitoring
-docker-compose up -d --build
+./start-monitoring.sh
 ```
-
-Monitoring se spaja na postojeći `parking-network`.
-
-### Redoslijed je BITAN!
-
-App mora biti pokrenut prije monitoringa jer on kreira network.
-
-
 ---
 
 ## 🌐 Pristup servisima
