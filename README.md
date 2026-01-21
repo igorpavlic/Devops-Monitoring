@@ -2,8 +2,6 @@
 
 ## Prometheus + Grafana - ZASEBNI DOCKER STACK
 
-Monitoring stack koji je odvojen od aplikacije. Dva nezavisna docker-compose-a koji dijele istu network.
-
 ---
 
 ## 🏗️ Arhitektura
