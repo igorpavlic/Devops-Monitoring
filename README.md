@@ -1,6 +1,6 @@
 # Parking App Monitoring Stack
 
-## Prometheus + Grafana - ZASEBNI DOCKER STACK
+## Prometheus + Grafana
 
 ---
 
