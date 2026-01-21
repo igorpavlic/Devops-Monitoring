@@ -2,7 +2,7 @@
 
 ## Prometheus + Grafana - ZASEBNI DOCKER STACK
 
-Monitoring stack koji je **potpuno odvojen** od aplikacije. Dva nezavisna docker-compose-a koji dijele istu network.
+Monitoring stack koji je odvojen od aplikacije. Dva nezavisna docker-compose-a koji dijele istu network.
 
 ---
 
@@ -40,7 +40,7 @@ Monitoring stack koji je **potpuno odvojen** od aplikacije. Dva nezavisna docker
 
 ## 🚀 Pokretanje
 
-### Korak 1: Pokreni aplikaciju PRVO
+### Korak 1: Pokreni aplikaciju VAŽNO
 
 Obavezno najprije pokrenuti App.
 
