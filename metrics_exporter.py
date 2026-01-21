@@ -1,6 +1,6 @@
 """
 Standalone metrics exporter for Flask parking application.
-Runs as a sidecar container - no modifications to app.py required.
+
 """
 
 from prometheus_client import start_http_server, Gauge, Counter, Histogram
